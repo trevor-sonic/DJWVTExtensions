@@ -6,7 +6,7 @@
 //  Copyright © 2018 dejaWorks. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 
 // MARK: - String to Date convertor
