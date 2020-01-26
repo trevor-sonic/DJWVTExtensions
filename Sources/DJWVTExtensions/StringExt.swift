@@ -33,7 +33,7 @@ public extension String {
 
 // MARK: - UI + String
 
-extension String {
+public extension String {
     /// Returns pixel sizes of text
     func sizeAsPixel(usedFont:UIFont)->CGSize{
         let nsString = (self + "<<=END" as NSString)
@@ -70,7 +70,7 @@ extension String {
 }
 
 /// substring helper
-extension String {
+public extension String {
 
   var length: Int {
     return count
