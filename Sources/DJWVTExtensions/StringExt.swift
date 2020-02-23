@@ -11,8 +11,8 @@ import UIKit
 /// Remove double spaces in between words
 public extension String {
     func condenseWhitespace() -> String {
-        let components = self.componentsSeparatedByCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
-        return components.filter { !$0.isEmpty }.joinWithSeparator(" ")
+        let components = self.components(separatedBy: .whitespacesAndNewlines)
+        return components.filter { !$0.isEmpty }.joined(separator: " ")
     }
 }
 
