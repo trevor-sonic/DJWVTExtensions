@@ -8,6 +8,13 @@
 
 import UIKit
 
+/// Remove double spaces in between words
+extension String {
+    func condenseWhitespace() -> String {
+        let components = self.componentsSeparatedByCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
+        return components.filter { !$0.isEmpty }.joinWithSeparator(" ")
+    }
+}
 
 // MARK: - String to Date convertor
 public extension String {
