@@ -7,6 +7,69 @@
 //
 
 import UIKit
+import Foundation
+
+public extension StringProtocol {
+    func index<S: StringProtocol>(of string: S, options: String.CompareOptions = []) -> Index? {
+        range(of: string, options: options)?.lowerBound
+    }
+    func endIndex<S: StringProtocol>(of string: S, options: String.CompareOptions = []) -> Index? {
+        range(of: string, options: options)?.upperBound
+    }
+    func indices<S: StringProtocol>(of string: S, options: String.CompareOptions = []) -> [Index] {
+        var indices: [Index] = []
+        var startIndex = self.startIndex
+        while startIndex < endIndex,
+            let range = self[startIndex...]
+                .range(of: string, options: options) {
+                    indices.append(range.lowerBound)
+                    startIndex = range.lowerBound < range.upperBound ? range.upperBound :
+                        index(range.lowerBound, offsetBy: 1, limitedBy: endIndex) ?? endIndex
+        }
+        return indices
+    }
+    func ranges<S: StringProtocol>(of string: S, options: String.CompareOptions = []) -> [Range<Index>] {
+        var result: [Range<Index>] = []
+        var startIndex = self.startIndex
+        while startIndex < endIndex,
+            let range = self[startIndex...]
+                .range(of: string, options: options) {
+                    result.append(range)
+                    startIndex = range.lowerBound < range.upperBound ? range.upperBound :
+                        index(range.lowerBound, offsetBy: 1, limitedBy: endIndex) ?? endIndex
+        }
+        return result
+    }
+}
+
+
+/// Takes the first string between indicators
+/// Ex. "This is [abc] example".takeBetween(from: "[", to: "]")  will return "abc"
+public extension String {
+    func takeBetween(from: String, to: String) -> String? {
+        return (range(of: from)?.upperBound).flatMap { substringFrom in
+            (range(of: to, range: substringFrom..<endIndex)?.lowerBound).map { substringTo in
+                String(self[substringFrom..<substringTo])
+            }
+        }
+    }
+    
+
+    func takeMultiBetweenBracets()->[String]{
+        let query = self //"Hello %test% how do you do %test1%"
+        let regex = try! NSRegularExpression(pattern:"\\[(.*?)\\]", options: [])
+        var results = [String]()
+        
+        regex.enumerateMatches(in: query, options: [], range: NSMakeRange(0, query.utf16.count)) { result, flags, stop in
+            if let r = result?.range(at: 1), let range = Range(r, in: query) {
+                results.append(String(query[range]))
+            }
+        }
+        return results
+    }
+}
+
+
 
 /// Remove double spaces in between words
 public extension String {
@@ -58,7 +121,7 @@ public extension String {
         
         let size: CGSize = prefix.size(withAttributes: [NSAttributedString.Key.font: usedFont])
         let pos = CGPoint(x: size.width , y: 0)
-
+        
         return pos.x
     }
     
@@ -71,36 +134,36 @@ public extension String {
         
         let size: CGSize = prefix.size(withAttributes: [NSAttributedString.Key.font: usedFont])
         let pos = CGPoint(x: size.width , y: 0)
-
+        
         return pos.x
     }
 }
 
 /// substring helper
 public extension String {
-
-  var length: Int {
-    return count
-  }
-
-  subscript (i: Int) -> String {
-    return self[i ..< i + 1]
-  }
-
-  func substring(fromIndex: Int) -> String {
-    return self[min(fromIndex, length) ..< length]
-  }
-
-  func substring(toIndex: Int) -> String {
-    return self[0 ..< max(0, toIndex)]
-  }
-
-  subscript (r: Range<Int>) -> String {
-    let range = Range(uncheckedBounds: (lower: max(0, min(length, r.lowerBound)),
-                                        upper: min(length, max(0, r.upperBound))))
-    let start = index(startIndex, offsetBy: range.lowerBound)
-    let end = index(start, offsetBy: range.upperBound - range.lowerBound)
-    return String(self[start ..< end])
-  }
-
+    
+    var length: Int {
+        return count
+    }
+    
+    subscript (i: Int) -> String {
+        return self[i ..< i + 1]
+    }
+    
+    func substring(fromIndex: Int) -> String {
+        return self[min(fromIndex, length) ..< length]
+    }
+    
+    func substring(toIndex: Int) -> String {
+        return self[0 ..< max(0, toIndex)]
+    }
+    
+    subscript (r: Range<Int>) -> String {
+        let range = Range(uncheckedBounds: (lower: max(0, min(length, r.lowerBound)),
+                                            upper: min(length, max(0, r.upperBound))))
+        let start = index(startIndex, offsetBy: range.lowerBound)
+        let end = index(start, offsetBy: range.upperBound - range.lowerBound)
+        return String(self[start ..< end])
+    }
+    
 }

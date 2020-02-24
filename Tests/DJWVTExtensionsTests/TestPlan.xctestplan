@@ -1,0 +1,24 @@
+{
+  "configurations" : [
+    {
+      "id" : "70ED7260-7B50-4B24-958A-A511C5C01A46",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:",
+        "identifier" : "DJWVTExtensionsTests",
+        "name" : "DJWVTExtensionsTests"
+      }
+    }
+  ],
+  "version" : 1
+}
