@@ -28,5 +28,15 @@ final class DJWVTExtensionsTests: XCTestCase {
 
         XCTAssertEqual(result, ["A♭m","E♯m", "F#7"])
     }
+    
+    func testDoubleRoundWithResolution(){
+    
+        let n1:Double = 10.12
+        XCTAssertEqual( n1.roundWith(0.1), 10.1 )
+        XCTAssertEqual( n1.roundWith(0.05), 10.1 )
         
+        let n2:Double = 10.15
+        XCTAssertEqual( n2.roundWith(0.1), 10.2 )
+        XCTAssertEqual( n2.roundWith(0.05), 10.15 )
+    }
 }

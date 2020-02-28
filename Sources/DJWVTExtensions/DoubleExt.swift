@@ -12,7 +12,7 @@ public extension Double{
     /// resolution can be like 0.25,  0.0001 etc.
     func roundWith(_ resolution:Double)->Double{
         let multiplier:Double = 1 / resolution
-        let roundVal = (self * multiplier).rounded() / multiplier
+        let roundVal = (self * multiplier).rounded(.toNearestOrEven) / multiplier
         return roundVal
     }
 }
