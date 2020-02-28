@@ -8,6 +8,26 @@
 
 import Foundation
 
+public extension Double{
+    /// resolution can be like 0.25,  0.0001 etc.
+    func roundWith(_ resolution:Double)->Double{
+        let multiplier:Double = 1 / resolution
+        let roundVal = (self * multiplier).rounded() / multiplier
+        return roundVal
+    }
+}
+public extension Comparable {
+    func clamped(to limits: ClosedRange<Self>) -> Self {
+        return min(max(self, limits.lowerBound), limits.upperBound)
+    }
+}
+public extension Strideable where Stride: SignedInteger {
+    func clamped(to limits: CountableClosedRange<Self>) -> Self {
+        return min(max(self, limits.lowerBound), limits.upperBound)
+    }
+}
+
+
 ///Returns main and decimal part of a decimal number
 public extension Double{
     func integerPart()->String{
