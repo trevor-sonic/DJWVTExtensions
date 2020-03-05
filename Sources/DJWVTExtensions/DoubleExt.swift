@@ -31,13 +31,15 @@ public extension Strideable where Stride: SignedInteger {
 ///Returns main and decimal part of a decimal number
 public extension Double{
     func integerPart()->String{
-        let result = floor(self).description.dropLast(2).description
-        return result
+        let result = floor(abs(self)).description.dropLast(2).description
+        let plusMinus = self < 0 ? "-" : ""
+        return  plusMinus + result
     }
     func fractionalPart(_ withDecimalQty:Int = 2)->String{
         let valDecimal = self.truncatingRemainder(dividingBy: 1)
         let formatted = String(format: "%.\(withDecimalQty)f", valDecimal)
-        return formatted.dropFirst(2).description
+        let dropQuantity = self < 0 ? 3:2
+        return formatted.dropFirst(dropQuantity).description
     }
 }
 ///Returns rounded in step numbers e.g. step is 4; 9 -> 12, 15 -> 16
