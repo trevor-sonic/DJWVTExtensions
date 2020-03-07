@@ -127,9 +127,10 @@ public extension String {
     
     /// Returns pixel position of index
     func position(of index:Int, usedFont:UIFont)->CGFloat{
+        let limitedIndex = index > self.count ? self.count : index
         let nsString = (self as NSString)
         
-        let range: NSRange = NSMakeRange(index, 1)
+        let range: NSRange = NSMakeRange(limitedIndex, 1)
         let prefix = nsString.substring(to: range.location)
         
         let size: CGSize = prefix.size(withAttributes: [NSAttributedString.Key.font: usedFont])
