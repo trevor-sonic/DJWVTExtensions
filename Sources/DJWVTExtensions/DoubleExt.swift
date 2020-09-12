@@ -65,4 +65,22 @@ public extension Double {
             formatter.maximumFractionDigits = 2
         return formatter.string(from: self as NSNumber)!
     }
+    func formated(fixedDecimalQty:Int = 2, flat:Bool = false)->String{
+        let formatter = NumberFormatter()
+        formatter.numberStyle = NumberFormatter.Style.decimal
+        // print(numberFormatter.currencySymbol)  // give $ or £
+        
+        formatter.minimumFractionDigits  = fixedDecimalQty
+        formatter.maximumFractionDigits  = fixedDecimalQty
+        
+        
+        
+        formatter.locale = Locale(identifier: Locale.current.identifier)
+        
+        if flat{ formatter.numberStyle = .none }
+        
+        let formatedNumberStr = formatter.string(from: self as NSNumber)
+        
+        return formatedNumberStr!
+    }
 }
