@@ -140,7 +140,14 @@ public extension String {
     }
 }
 
-/// substring helper
+/**
+ let str = "abcdef"
+ str[1 ..< 3] // returns "bc"
+ str[5] // returns "f"
+ str[80] // returns ""
+ str.substring(fromIndex: 3) // returns "def"
+ str.substring(toIndex: str.length - 2) // returns "abcd"
+ */
 public extension String {
     
     var length: Int {
